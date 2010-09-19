@@ -1,0 +1,48 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ *  Provides context condition plugins for a node's input format and input filters.
+ */
+
+/**
+ * Implementation of hook_context_registry().
+ */
+function hippel_context_context_registry() {
+  $registry = array();
+  $registry['conditions'] = array(
+    'node_author' => array(
+      'title' => t('Node author'),
+      'description' => t('Set this context when viewing a node page depending on whether or not the current user is the node author.'),
+      'plugin' => 'hippel_context_condition_node_author',
+    ),
+  );
+  return $registry;
+}
+
+/**
+ * Implementation of hook_context_plugins().
+ */
+function hippel_context_context_plugins() {
+  $plugins = array();
+  $plugins['hippel_context_condition_node_author'] = array(
+    'handler' => array(
+      'path' => drupal_get_path('module', 'hippel_context') . '/plugins',
+      'file' => 'hippel_context_condition_node_author.inc',
+      'class' => 'hippel_context_condition_node_author',
+      'parent' => 'context_condition_node',
+    ),
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implementation of hook_context_node_condition().
+ */
+function hippel_context_context_node_condition_alter($node, $op) {
+  if ($plugin = context_get_plugin('condition', 'node_author')) {
+    $plugin->execute($node, $op);
+  }
+}

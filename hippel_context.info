@@ -1,0 +1,6 @@
+; $Id$
+core=6.x
+name="Hippel Context Plugins"
+description="Provides additional context conditions for Open Hippel."
+dependencies[]="context"
+package="Open Hippel"
