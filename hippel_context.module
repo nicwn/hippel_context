@@ -1,5 +1,6 @@
 <?php
-// $Id$
+
+include_once('hippel_context.features.inc');
 
 /**
  * @file
@@ -46,3 +47,4 @@ function hippel_context_context_node_condition_alter($node, $op) {
     $plugin->execute($node, $op);
   }
 }
+
